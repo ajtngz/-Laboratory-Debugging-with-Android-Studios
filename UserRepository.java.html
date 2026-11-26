@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>UserRepository.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+UserRepository.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">appdev_debugging</span><span class="s2">.</span><span class="s1">data</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">appdev_debugging</span><span class="s2">.</span><span class="s1">data</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+
+<span class="s0">public interface </span><span class="s1">UserRepository </span><span class="s2">{</span>
+    <span class="s3">/** </span><span class="s4">@return </span><span class="s3">the user with this email, or null if none exists. Email lookup is case-insensitive. */</span>
+    <span class="s1">User findByEmail</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">);</span>
+
+    <span class="s3">/** </span><span class="s4">@return </span><span class="s3">true if a user with this email already exists. */</span>
+    <span class="s0">boolean </span><span class="s1">exists</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">);</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Adds a new user.</span>
+     <span class="s3">* </span><span class="s4">@return </span><span class="s3">true if saved, false if a user with the same email already exists.</span>
+     <span class="s3">*/</span>
+    <span class="s0">boolean </span><span class="s1">add</span><span class="s2">(</span><span class="s1">User user</span><span class="s2">);</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

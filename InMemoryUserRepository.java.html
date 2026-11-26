@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>InMemoryUserRepository.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+InMemoryUserRepository.java</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">package </span><span class="s0">com</span><span class="s2">.</span><span class="s0">example</span><span class="s2">.</span><span class="s0">appdev_debugging</span><span class="s2">.</span><span class="s0">data</span><span class="s2">;</span>
+
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">example</span><span class="s2">.</span><span class="s0">appdev_debugging</span><span class="s2">.</span><span class="s0">data</span><span class="s2">.</span><span class="s0">model</span><span class="s2">.</span><span class="s0">User</span><span class="s2">;</span>
+
+<span class="s1">import </span><span class="s0">java</span><span class="s2">.</span><span class="s0">util</span><span class="s2">.</span><span class="s0">HashMap</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">java</span><span class="s2">.</span><span class="s0">util</span><span class="s2">.</span><span class="s0">Locale</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">java</span><span class="s2">.</span><span class="s0">util</span><span class="s2">.</span><span class="s0">Map</span><span class="s2">;</span>
+
+<span class="s1">public class </span><span class="s0">InMemoryUserRepository </span><span class="s1">implements </span><span class="s0">UserRepository </span><span class="s2">{</span>
+
+    <span class="s1">private final </span><span class="s0">Map</span><span class="s2">&lt;</span><span class="s0">String</span><span class="s2">, </span><span class="s0">User</span><span class="s2">&gt; </span><span class="s0">usersByEmail </span><span class="s2">= </span><span class="s1">new </span><span class="s0">HashMap</span><span class="s2">&lt;&gt;();</span>
+
+    <span class="s0">@Override</span>
+    <span class="s1">public synchronized </span><span class="s0">User findByEmail</span><span class="s2">(</span><span class="s0">String email</span><span class="s2">) {</span>
+        <span class="s1">if </span><span class="s2">(</span><span class="s0">email </span><span class="s2">== </span><span class="s1">null</span><span class="s2">) </span><span class="s1">return null</span><span class="s2">;</span>
+        <span class="s1">return </span><span class="s0">usersByEmail</span><span class="s2">.</span><span class="s0">get</span><span class="s2">(</span><span class="s0">normalize</span><span class="s2">(</span><span class="s0">email</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s0">@Override</span>
+    <span class="s1">public synchronized boolean </span><span class="s0">exists</span><span class="s2">(</span><span class="s0">String email</span><span class="s2">) {</span>
+        <span class="s1">return </span><span class="s0">email </span><span class="s2">!= </span><span class="s1">null </span><span class="s2">&amp;&amp; </span><span class="s0">usersByEmail</span><span class="s2">.</span><span class="s0">containsKey</span><span class="s2">(</span><span class="s0">normalize</span><span class="s2">(</span><span class="s0">email</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s0">@Override</span>
+    <span class="s1">public synchronized boolean </span><span class="s0">add</span><span class="s2">(</span><span class="s0">User user</span><span class="s2">) {</span>
+        <span class="s1">if </span><span class="s2">(</span><span class="s0">user </span><span class="s2">== </span><span class="s1">null </span><span class="s2">|| </span><span class="s0">user</span><span class="s2">.</span><span class="s0">getEmail</span><span class="s2">() == </span><span class="s1">null</span><span class="s2">) {</span>
+            <span class="s1">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">String email </span><span class="s2">= </span><span class="s0">normalize</span><span class="s2">(</span><span class="s0">user</span><span class="s2">.</span><span class="s0">getEmail</span><span class="s2">());</span>
+
+        <span class="s1">if </span><span class="s2">(</span><span class="s0">usersByEmail</span><span class="s2">.</span><span class="s0">containsKey</span><span class="s2">(</span><span class="s0">email</span><span class="s2">)) {</span>
+            <span class="s1">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">usersByEmail</span><span class="s2">.</span><span class="s0">put</span><span class="s2">(</span><span class="s0">email</span><span class="s2">, </span><span class="s0">user</span><span class="s2">);</span>
+        <span class="s1">return true</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private static </span><span class="s0">String normalize</span><span class="s2">(</span><span class="s0">String email</span><span class="s2">) {</span>
+        <span class="s1">return </span><span class="s0">email</span><span class="s2">.</span><span class="s0">trim</span><span class="s2">().</span><span class="s0">toLowerCase</span><span class="s2">(</span><span class="s0">Locale</span><span class="s2">.</span><span class="s0">ROOT</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
